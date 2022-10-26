@@ -67,7 +67,7 @@ const PrioritiesScreen = props => {
       <View>
         <FlatList 
           data={priorities}
-          renderItem={({item}) => <priorities post={item} />}
+          renderItem={({item}) => <Priority post={item} />}
           keyExtractor={item => item.id}
         />
       </View>
