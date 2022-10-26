@@ -4,6 +4,8 @@ import { openDatabase } from "react-native-sqlite-storage";
 // use hook to create database
 const myRemindersDB = openDatabase({name: 'MyReminders.db'});
 const remindersTableName = 'reminders';
+const prioritiesTableName = 'priority';
+
 
 module.exports = {
     // declare function that will create the reminders table
@@ -51,4 +53,47 @@ module.exports = {
         });
     },
 
+    // declare function that will create the item table
+    createPrioritiesTable: async function () {
+    // declare a transaction that will execute a SQL statement
+    (await myRemindersDB).transaction(txn => {
+        // execute the SQL
+        txn.executeSql(
+            `CREATE TABLE IF NOT EXISTS ${prioritiesTableName}(
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                title TEXT,
+                description TEXT
+            );`,
+            // arguments needed when using an SQL prepared statement
+            [],
+            // callback function to handle results of SQL query
+            () => {
+                console.log('Priorities table created sucessfully');
+            },
+            error => {
+                console.log('Error creating priorities table ' + error.message);
+            },
+        );
+    });
+},
+
+    // declare functions that will insert a row into the lists table
+    addPriority: async function (title, description) {
+    // declare a transaction that will execute an SQL statement
+    (await myRemindersDB).transaction(txn => {
+        // execute the SQL
+        txn.executeSql(
+            `INSERT INTO ${prioritiesTableName} (title, description) VALUES ("${title}", ${description})`,
+            // argument passed when using SQL prepared statements
+            [],
+            // callback function to handle results of SQL query
+            () => {
+                console.log(title + " added sucessfully");
+            },
+            error => {
+                console.log('Error adding priorities ' + error.message);
+            },
+        );
+    });
+ },
 };
