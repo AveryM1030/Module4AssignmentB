@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, TouchableOpacity, Text, FlatList} from 'react-native';
+import Priority from '../../components/Priority';
 import { useNavigation } from '@react-navigation/native';
 import styles from './styles';
 // import openDatabase hook
@@ -74,7 +75,7 @@ const PrioritiesScreen = props => {
         <View style={styles.bottom}>
             <TouchableOpacity 
                 style={styles.button}
-                onPress={() => console.log('Add Priority')}
+                onPress={() => navigation.navigate('Add Priority')}
                 >
                 <Text style={styles.buttonText}>Add Priority</Text>
             </TouchableOpacity>
